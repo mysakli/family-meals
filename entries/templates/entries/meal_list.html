@@ -1,0 +1,57 @@
+{% extends "entries/base.html" %}
+{% block content %}
+
+<div class="filters">
+    <form method="GET">
+        {{ filter.form.as_p }}
+        <button type="submit">Filter</button>
+    </form>
+</div>
+<div class="new-entry">
+    <a href="{% url 'meal-create' %}"><button>Add new entry</button></a>
+</div>
+<div class="meals-container">
+{% for meal in meals %}
+    <div class="card w-100" style="max-width: 14rem;">
+        <div class='img-container'>
+            <img class="card-img-top" src='{{meal.get_photo_url.url }}' alt='{{ meal.name }}' width='200' height='200'>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                {{ meal.name }}
+            </h5>
+            
+            {% if meal.recipe %}
+                <a href='{{meal.recipe}}' class='card-link btn btn-primary' target='_blank'>Recipe</a>
+            {% else %}
+                <p class="card-subtitle mb-2 text-body-secondary">No recipe</p>
+            {% endif %}
+            
+         
+            <!-- <div class='meal-notes'> -->
+                <!-- <p>Notes:</p> -->
+            <p class="card-text">{{ meal.notes }}</p>
+            <!-- </div> -->
+            
+        </div>
+        <div class="footer-links">
+            <a href="{% url 'meal-update' meal.id %}" class="card-link">Edit</a>
+            <a href="{% url 'meal-delete' meal.id %}" class="card-link">Delete</a>
+        </div>
+        
+    </div>
+{% endfor %}
+    
+</div>
+
+
+{% endblock content %}
+
+
+
+
+
+
+
+
+ 

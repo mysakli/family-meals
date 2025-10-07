@@ -1,0 +1,8 @@
+{% load static %}
+
+<article>
+    {% with image=object.get_image_data %}
+    <h3>{{ meal.name }}</h3>
+    <img src='{{ meal.get_photo_url.url }}' alt='{{ meal.get_photo_url.alt_text }}' width='150' height='150'>
+    {% endwith %}
+</article>

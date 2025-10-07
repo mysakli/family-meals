@@ -1,0 +1,18 @@
+{% extends "entries/base.html" %}
+
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Save">
+    </form>
+    {% if meal %}
+        <a href="{% url 'meal-detail' meal.id %}">
+            <button>Cancel</button>
+        </a>
+    {% else %}
+        <a href="{% url 'meal-list' %}">
+            <button>Cancel</button>
+        </a>
+    {% endif %}
+{% endblock content %}
