@@ -22,7 +22,7 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Environment / secrets with safe defaults
-SECRET_KEY = os.getenv('SECRET_KEY', 'PV7p#D')
+SECRET_KEY = os.getenv('SECRET_KEY', 'replace-me-for-dev-only')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 
@@ -31,12 +31,6 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # Use a safe default for local development; require setting SECRET_KEY in production
-SECRET_KEY = os.getenv('SECRET_KEY', 'replace-me-for-dev-only')
-
-# SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG and ALLOWED_HOSTS with safe defaults
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 
 
 # Application definition
