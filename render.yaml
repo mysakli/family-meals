@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: family-meals
+    env: python
+    plan: free
+    buildCommand: |
+      set -e
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+    startCommand: "gunicorn FamilyMeals.wsgi:application --bind 0.0.0.0:$PORT --workers 3"
+    releaseCommand: "python manage.py migrate --noinput"
+    envVars:
+      - key: SECRET_KEY
+        sync: false
+      - key: DEBUG
+        sync: false
+      - key: ALLOWED_HOSTS
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: USE_S3
+        sync: false
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_STORAGE_BUCKET_NAME
+        sync: false
+      - key: AWS_S3_REGION_NAME
+        sync: false
+      - key: AWS_S3_CUSTOM_DOMAIN
+        sync: false
+*** End Of File
