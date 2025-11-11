@@ -24,7 +24,7 @@ class Meal(models.Model):
     photo = models.ImageField(upload_to='uploads/', blank=True, null=True)
     recipe = models.URLField(max_length=500, blank=True, null=True, help_text='Enter a valid URL, e.g., https://example.com')
     date_created = models.DateTimeField(default=timezone.now)
-    vegeterian = models.BooleanField(default=False)
+    vegetarian = models.BooleanField(default=False)
     meal_type = models.ForeignKey(MealType, on_delete=models.PROTECT)
     grandma = models.BooleanField(default=False)
     notes = models.TextField(max_length=500, blank=True,  verbose_name='Notes',

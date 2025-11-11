@@ -13,4 +13,4 @@ class MealFilter(django_filters.FilterSet):
 
     class Meta:
         model = Meal
-        fields = ['grandma', 'meal_type', 'name', 'vegeterian', ]
+        fields = ['grandma', 'meal_type', 'name', 'vegetarian',]
