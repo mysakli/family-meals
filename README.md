@@ -44,6 +44,20 @@ DB_HOST=localhost
 DB_PORT=5432
 ```
 
+**Optional S3 Storage Configuration (for production):**
+
+To use AWS S3 for storing media files (meal pictures), add these additional environment variables:
+
+```
+USE_S3=True
+AWS_ACCESS_KEY_ID=your-aws-access-key-id
+AWS_SECRET_ACCESS_KEY=your-aws-secret-access-key
+AWS_STORAGE_BUCKET_NAME=your-s3-bucket-name
+AWS_S3_REGION_NAME=us-east-1  # Optional, defaults to us-east-1
+```
+
+If `USE_S3` is not set or set to `False`, media files will be stored locally in the `media/` directory.
+
 4. Database migrations
 
 ```bash
@@ -64,7 +78,9 @@ python manage.py runserver
 
 7. Media and static files
 
-- Media files are served from `MEDIA_ROOT` (`media/` by default).
+- Media files (meal pictures) can be stored either locally or on AWS S3:
+  - **Local storage (default)**: Files are served from `MEDIA_ROOT` (`media/` by default).
+  - **S3 storage**: Set `USE_S3=True` in your environment variables along with AWS credentials.
 - Static files are collected from `entries/static` in development.
 
 ## Notes
