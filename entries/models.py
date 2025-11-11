@@ -21,7 +21,7 @@ class MealType(models.Model):
 
 class Meal(models.Model):
     name = models.CharField(max_length=200)
-    photo = models.ImageField(upload_to='uploads/', blank=True, null=True)
+    photo = models.ImageField(upload_to='media/uploads/', blank=True, null=True)
     recipe = models.URLField(max_length=500, blank=True, null=True, help_text='Enter a valid URL, e.g., https://example.com')
     date_created = models.DateTimeField(default=timezone.now)
     vegetarian = models.BooleanField(default=False)
