@@ -21,7 +21,7 @@ class MealType(models.Model):
 
 class Meal(models.Model):
     name = models.CharField(max_length=200)
-    photo = models.ImageField(upload_to='media/uploads/', blank=True, null=True)
+    photo = models.ImageField(upload_to='uploads/', blank=True, null=True)
     recipe = models.URLField(max_length=500, blank=True, null=True, help_text='Enter a valid URL, e.g., https://example.com')
     date_created = models.DateTimeField(default=timezone.now)
     vegetarian = models.BooleanField(default=False)
@@ -75,7 +75,15 @@ class Meal(models.Model):
     def get_photo_url(self):
         if self.photo:
             return {'url': self.photo.url, 'alt_text': self.name}
-        return {'url': f'{settings.MEDIA_URL}photos/img-null.jpg', 'alt_text': 'No photo'} 
+        # Use default storage to build the correct URL for both local and S3
+        from django.core.files.storage import default_storage
+        default_photo_path = 'photos/img-null.jpg'
+        if default_storage.exists(default_photo_path):
+            default_url = default_storage.url(default_photo_path)
+        else:
+            # Fallback if file doesn't exist
+            default_url = f'{settings.MEDIA_URL}{default_photo_path}'
+        return {'url': default_url, 'alt_text': 'No photo'} 
     
 
 
