@@ -77,7 +77,7 @@ class Meal(models.Model):
             return {'url': self.photo.url, 'alt_text': self.name}
         # Use default storage to build the correct URL for both local and S3
         from django.core.files.storage import default_storage
-        default_photo_path = 'photos/img-null.jpg'
+        default_photo_path = 'img-null.jpg'
         if default_storage.exists(default_photo_path):
             default_url = default_storage.url(default_photo_path)
         else:
