@@ -1,11 +1,15 @@
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    font-family: sans-serif;
-    font-size: 0.9em;
-    color: rgb(11, 11, 11);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1rem;
+    color: #333;
+    background-color: #f8f9fa;
+    padding: 1rem;
 }
 
 a:hover {
@@ -13,11 +17,20 @@ a:hover {
 }
 
 h1 {
-    font-size: 2.8em;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
 }
 
 h1 a {
     text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+
+h1 a:hover {
+    color: #0d6efd;
+    opacity: 1;
 }
 
 h2, h3 {
@@ -54,6 +67,7 @@ label {
 
 .img-container {
     margin: 0.5em 0em;
+    padding: 0.3em;
 }
 
 button,
@@ -97,7 +111,139 @@ input[type="submit"] {
 
 
 .footer-links {
-    padding: 1rem;
-    background-color: rgb(227, 224, 224);
+    padding: 0.75rem 1rem;
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* Toolbar with filters and add button */
+.toolbar {
+    background: white;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.filter-form {
+    flex: 1;
+    min-width: 300px;
+}
+
+.filter-group {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.filter-field {
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+}
+
+.filter-field label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: #495057;
+}
+
+.filter-field select,
+.filter-field input {
+    padding: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+/* Card improvements */
+.card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.card-img-top {
+    object-fit: cover;
+    height: 200px;
+    width: 100%;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.75rem;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+.card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.recipe-container {
+    padding: 0 1rem 1rem 1rem;
+    margin-top: auto;
+}
+
+.recipe-btn {
+    max-width: calc(100% - 0.5rem);
+    font-size: 0.875rem;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.card-link {
+    text-decoration: none;
+    color: #0d6efd;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.card-link:hover {
+    color: #0a58ca;
+}
+
+/* Meal detail page */
+article {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+article img {
+    margin-top: 1rem;
+}
+
+/* Navigation buttons */
+.navigation-buttons {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
 }
 
