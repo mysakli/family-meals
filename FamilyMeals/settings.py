@@ -165,7 +165,7 @@ if USE_S3:
     
     # Media files (uploads) settings
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 else:
     # Local media files storage
     MEDIA_URL = '/media/'
