@@ -35,42 +35,45 @@ class Meal(models.Model):
         return self.name
     
     def save(self, *args, **kwargs):
-    
-        if self.photo:
-            img = Image.open(self.photo)
-            img = img.convert('RGB')  # Convert to RGB (removes alpha transparency)
-            
-            # Calculate target dimensions while maintaining aspect ratio
-            target_size = 200
-            ratio = max(target_size / img.size[0], target_size / img.size[1])
-            new_size = tuple([int(x * ratio) for x in img.size])
-            
-            # Resize image maintaining aspect ratio
-            img = img.resize(new_size, Image.LANCZOS)
-            
-            # Calculate cropping coordinates to center the image
-            left = (new_size[0] - target_size) // 2
-            top = (new_size[1] - target_size) // 2
-            right = left + target_size
-            bottom = top + target_size
-            
-            # Crop to square
-            img = img.crop((left, top, right, bottom))
-            # img.thumbnail((187.5, 187.5), Image.LANCZOS) # Resize image
-            # width, height = img.size
-            # left_right = (width - 150) / 1.25
-            # top_bottom = (height - 150) / 1.25
-            
+        # Only process the photo if it's a new upload
+        if self.photo and hasattr(self.photo, 'file'):
+            try:
+                # Read file into memory before processing (needed for S3)
+                self.photo.file.seek(0)
+                img = Image.open(self.photo.file)
+                img = img.convert('RGB')  # Convert to RGB (removes alpha transparency)
+                
+                # Calculate target dimensions while maintaining aspect ratio
+                target_size = 200
+                ratio = max(target_size / img.size[0], target_size / img.size[1])
+                new_size = tuple([int(x * ratio) for x in img.size])
+                
+                # Resize image maintaining aspect ratio
+                img = img.resize(new_size, Image.LANCZOS)
+                
+                # Calculate cropping coordinates to center the image
+                left = (new_size[0] - target_size) // 2
+                top = (new_size[1] - target_size) // 2
+                right = left + target_size
+                bottom = top + target_size
+                
+                # Crop to square
+                img = img.crop((left, top, right, bottom))
+                
+                # Save the processed image to buffer
+                buffer = BytesIO()
+                img.save(buffer, format='JPEG', quality=85)
+                buffer.seek(0)
+                
+                # Replace the photo field with processed image
+                file_name = self.photo.name
+                self.photo.save(file_name, ContentFile(buffer.getvalue()), save=False)
+                
+            except Exception as e:
+                import traceback
+                traceback.print_exc()
 
-            # img = img.crop((left_right, top_bottom, left_right + 150, top_bottom + 150))
-            
-            # Save the processed image
-            buffer = BytesIO()
-            img.save(buffer, format='JPEG', quality=85)  # Save as JPEG with compression
-            self.photo.save(self.photo.name, ContentFile(buffer.getvalue()), save=False)
-        
-
-        super(Meal, self).save(*args, **kwargs)  # Save the instance after processing
+        super(Meal, self).save(*args, **kwargs)
     
     def get_photo_url(self):
         if self.photo:
