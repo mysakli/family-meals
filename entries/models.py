@@ -78,14 +78,9 @@ class Meal(models.Model):
     def get_photo_url(self):
         if self.photo:
             return {'url': self.photo.url, 'alt_text': self.name}
-        # Use default storage to build the correct URL for both local and S3
-        from django.core.files.storage import default_storage
-        default_photo_path = 'img-null.jpg'
-        if default_storage.exists(default_photo_path):
-            default_url = default_storage.url(default_photo_path)
-        else:
-            # Fallback if file doesn't exist
-            default_url = f'{settings.MEDIA_URL}{default_photo_path}'
+        # Return a default placeholder URL without checking if file exists
+        # This avoids S3 permission errors
+        default_url = f'{settings.MEDIA_URL}img-null.jpg'
         return {'url': default_url, 'alt_text': 'No photo'} 
     
 
