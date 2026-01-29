@@ -35,9 +35,16 @@ class Meal(models.Model):
         return self.name
     
     def save(self, *args, **kwargs):
+        import logging
+        logger = logging.getLogger(__name__)
+        
         # Only process the photo if it's a new upload
         if self.photo and hasattr(self.photo, 'file'):
             try:
+                logger.info(f'=== SAVING MEAL: {self.name} ===')
+                logger.info(f'Photo storage backend: {type(self.photo.storage).__name__}')
+                logger.info(f'Photo storage class: {type(self.photo.storage)}')
+                
                 # Read file into memory before processing (needed for S3)
                 self.photo.file.seek(0)
                 img = Image.open(self.photo.file)
@@ -67,9 +74,12 @@ class Meal(models.Model):
                 
                 # Replace the photo field with processed image
                 file_name = self.photo.name
+                logger.info(f'Saving photo to storage: {file_name}')
                 self.photo.save(file_name, ContentFile(buffer.getvalue()), save=False)
+                logger.info(f'Photo saved successfully')
                 
             except Exception as e:
+                logger.error(f'Error saving photo: {e}')
                 import traceback
                 traceback.print_exc()
 
