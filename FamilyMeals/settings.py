@@ -147,6 +147,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # AWS S3 settings for media files
 USE_S3 = os.getenv('USE_S3', 'False') == 'True'
 
+# Debug logging for S3 configuration
+import logging
+logger = logging.getLogger(__name__)
+logger.info('=== S3 CONFIGURATION DEBUG ===')
+logger.info(f'USE_S3: {USE_S3}')
+logger.info(f'AWS_ACCESS_KEY_ID set: {os.getenv("AWS_ACCESS_KEY_ID")}')
+logger.info(f'AWS_SECRET_ACCESS_KEY set: {"Yes" if os.getenv("AWS_SECRET_ACCESS_KEY") else "No"}')
+logger.info(f'AWS_STORAGE_BUCKET_NAME: {os.getenv("AWS_STORAGE_BUCKET_NAME")}')
+logger.info(f'AWS_S3_REGION_NAME: {os.getenv("AWS_S3_REGION_NAME", "us-east-1")}')
+
 if USE_S3:
     # AWS S3 settings
     AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
@@ -154,6 +164,9 @@ if USE_S3:
     AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
     AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME', 'us-east-1')
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    
+    logger.info(f'S3 Storage enabled for bucket: {AWS_STORAGE_BUCKET_NAME}')
+    logger.info(f'S3 Custom domain: {AWS_S3_CUSTOM_DOMAIN}')
     
     # S3 settings
     AWS_S3_OBJECT_PARAMETERS = {
@@ -186,7 +199,9 @@ if USE_S3:
     }
     
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
+    logger.info(f'MEDIA_URL: {MEDIA_URL}')
 else:
+    logger.info('Using local file storage')
     # Local media files storage
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR / 'media'
