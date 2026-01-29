@@ -5,7 +5,6 @@ from io import BytesIO
 from django.core.files.base import ContentFile
 from django.conf import settings
 import django_filters
-import os
 
 
 
@@ -45,7 +44,6 @@ class Meal(models.Model):
                 logger.info(f'=== SAVING MEAL: {self.name} ===')
                 logger.info(f'Photo storage backend: {type(self.photo.storage).__name__}')
                 logger.info(f'Photo storage class: {type(self.photo.storage)}')
-                logger.info(f'AWS_ACCESS_KEY_ID set: {os.getenv("AWS_ACCESS_KEY_ID")}')
                 
                 # Read file into memory before processing (needed for S3)
                 self.photo.file.seek(0)
