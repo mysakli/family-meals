@@ -76,11 +76,17 @@ input {
     font-size: inherit;
     min-height: 2.5em;
     padding: 0 1rem;
+    
 }
 
+input[type="submit"]
+
 input[type="text"],
-textarea {
-    width: 100%;
+textarea,
+select {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    
 }
 
 textarea {
@@ -164,6 +170,11 @@ input[type="submit"] {
     border: 1px solid #ced4da;
     border-radius: 4px;
     font-size: 1rem;
+}
+
+.filter-field input[name="name"] {
+    width: 20ch;
+    max-width: 100%;
 }
 
 /* Card improvements */
