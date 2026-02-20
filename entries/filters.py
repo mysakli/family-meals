@@ -8,9 +8,9 @@ class MealFilter(django_filters.FilterSet):
         (False, 'No'),
     )
     grandma = django_filters.ChoiceFilter(choices=BOOLEAN_CHOICES)
-    name = django_filters.CharFilter(lookup_expr='icontains')
     vegetarian = django_filters.ChoiceFilter(choices=BOOLEAN_CHOICES)
+    name = django_filters.CharFilter(lookup_expr='icontains')
 
     class Meta:
         model = Meal
-        fields = ['grandma', 'meal_type', 'name', 'vegetarian',]
+        fields = ['meal_type', 'grandma', 'vegetarian', 'name']

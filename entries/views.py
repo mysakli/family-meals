@@ -42,7 +42,7 @@ def upload_meal(request):
 
 class MealListView(FilterView):
     model = Meal
-    queryset = Meal.objects.all().order_by('name')
+    queryset = Meal.objects.all().order_by('meal_type__name', 'name')
     template_name = 'entries/meal_list.html'
     context_object_name = 'meals'
     filterset_class = None
