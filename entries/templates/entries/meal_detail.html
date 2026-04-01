@@ -1,16 +1,53 @@
 {% extends "entries/base.html" %}
+
 {% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+        <div class="card shadow-sm border-0 p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">{{ meal.name }}</h2>
+                {% if meal.vegetarian %}
+                    <span class="badge bg-success">Vegetarian</span>
+                {% endif %}
+            </div>
 
-<article>
-    {% with image=object.get_image_data %}
-    <h3>{{ meal.name }}</h3>
-    <img src='{{ meal.get_photo_url.url }}' alt='{{ meal.get_photo_url.alt_text }}' width='150' height='150'>
-    {% endwith %}
-</article>
+            <div class="row g-4">
+                <div class="col-12 col-md-5">
+                    <img src="{{ meal.get_photo_url.url }}" alt="{{ meal.get_photo_url.alt_text }}" class="img-fluid rounded shadow-sm w-100">
+                </div>
+                <div class="col-12 col-md-7">
+                    <div class="mb-4">
+                        <h5 class="fw-bold text-muted small text-uppercase">Meal Type</h5>
+                        <p class="lead">{{ meal.meal_type.name }}</p>
+                    </div>
 
-<div class="navigation-buttons">
-    <button onclick="history.back()" class="btn btn-secondary">← Back</button>
-    <a href="{% url 'meal-list' %}" class="btn btn-primary">Back to List</a>
+                    {% if meal.recipe %}
+                        <div class="mb-4">
+                            <h5 class="fw-bold text-muted small text-uppercase">Recipe</h5>
+                            <a href="{{ meal.recipe }}" target="_blank" class="btn btn-outline-primary">View Original Recipe →</a>
+                        </div>
+                    {% endif %}
+
+                    {% if meal.notes %}
+                        <div class="mb-4">
+                            <h5 class="fw-bold text-muted small text-uppercase">Notes</h5>
+                            <p class="bg-light p-3 rounded">{{ meal.notes|linebreaks }}</p>
+                        </div>
+                    {% endif %}
+
+                    <div class="mt-4 pt-3 border-top">
+                        <div class="d-grid gap-2 d-sm-flex">
+                            <a href="{% url 'meal-update' meal.id %}" class="btn btn-warning flex-fill">Edit Meal</a>
+                            <a href="{% url 'meal-delete' meal.id %}" class="btn btn-danger flex-fill">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <a href="{% url 'meal-list' %}" class="btn btn-secondary text-white">← Back to List</a>
+        </div>
+    </div>
 </div>
-
 {% endblock content %}
