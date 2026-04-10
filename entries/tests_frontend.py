@@ -22,15 +22,14 @@ class FrontendTests(TestCase):
         """Verify that the base layout includes a responsive navigation bar."""
         response = self.client.get(reverse('meal-list'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, '<nav class="navbar')
-        self.assertContains(response, 'navbar-toggler')
-        self.assertContains(response, 'navbar-collapse')
+        self.assertContains(response, '<nav class="bg-white border-b')
+        self.assertContains(response, 'id="mobile-menu"')
 
     def test_base_layout_has_logo_icon(self):
         """Verify that the base layout includes the SVG logo icon."""
         response = self.client.get(reverse('meal-list'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'class="logo-icon"')
+        self.assertContains(response, '<svg class="h-8 w-8 text-slate-800')
         self.assertContains(response, '<svg')
 
     def test_meal_list_uses_card_layout_without_fixed_width(self):
