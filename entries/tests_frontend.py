@@ -53,10 +53,15 @@ class FrontendTests(TestCase):
         self.assertContains(response, 'class="btn btn-primary')
         self.assertContains(response, 'class="btn btn-secondary')
 
-    def test_meal_detail_uses_bootstrap_classes(self):
-        """Verify that the meal detail view uses Bootstrap 5 layout classes."""
-        response = self.client.get(reverse('meal-detail', kwargs={'pk': self.meal.pk}))
+    def test_base_layout_has_tailwind_css(self):
+        """Verify that the base layout includes the Tailwind CSS link tag."""
+        response = self.client.get(reverse('meal-list'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'class="img-fluid')
-        self.assertContains(response, 'class="btn btn-warning')
-        self.assertContains(response, 'class="btn btn-danger')
+        self.assertContains(response, 'href="/static/css/tailwind.css"')
+
+    def test_base_layout_has_tailwind_background_class(self):
+        """Verify that the base layout includes the bg-background class on the body."""
+        response = self.client.get(reverse('meal-list'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '<body class="bg-background">')
+
