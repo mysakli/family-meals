@@ -33,16 +33,18 @@ class FrontendTests(TestCase):
         self.assertContains(response, '<svg')
 
     def test_meal_list_uses_card_layout_without_fixed_width(self):
-        """Verify that the meal list uses Bootstrap cards without restrictive fixed widths."""
+        """Verify that the meal list uses Tailwind card styling."""
         response = self.client.get(reverse('meal-list'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'class="card')
+        self.assertContains(response, 'rounded-xl')
+        self.assertContains(response, 'shadow-sm')
 
     def test_meal_list_has_touch_friendly_links(self):
         """Verify that edit and delete links have classes that can be styled for touch targets."""
         response = self.client.get(reverse('meal-list'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'class="card-link')
+        self.assertContains(response, 'text-primary')
+        self.assertContains(response, 'text-red-600')
 
     def test_meal_form_uses_bootstrap_classes(self):
         """Verify that the meal form uses Bootstrap 5 form-control classes."""
