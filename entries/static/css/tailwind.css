@@ -640,6 +640,11 @@ video {
   border-width: 0px;
 }
 
+.bg-background {
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 250 252 / var(--tw-bg-opacity, 1));
+}
+
 .bg-transparent {
   background-color: transparent;
 }
