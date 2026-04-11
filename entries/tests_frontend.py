@@ -68,6 +68,7 @@ class FrontendTests(TestCase):
         self.assertContains(response, 'name="meal_type"')
         self.assertContains(response, 'id="id_meal_type"')
         self.assertContains(response, 'rounded-xl')
+        self.assertContains(response, 'border-slate-300')
         self.assertContains(response, f'<option value="{self.meal_type.pk}">{self.meal_type.name}</option>', html=True)
 
     def test_base_layout_has_tailwind_css(self):

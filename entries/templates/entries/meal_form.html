@@ -5,68 +5,70 @@
     <div class="w-full max-w-2xl">
         <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-8">
             <h2 class="text-2xl font-bold text-slate-900 mb-6">{% if meal %}Edit Meal{% else %}Add New Meal{% endif %}</h2>
-            <form method="post" enctype="multipart/form-data" class="space-y-5">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 
-                {% for field in form %}
-                    <div class="space-y-1.5">
-                        {% if field.field.widget.input_type == 'checkbox' %}
-                            <div class="flex items-center gap-3 py-1">
-                                <input type="checkbox" name="{{ field.name }}" id="{{ field.id_for_label }}" {% if field.value %}checked{% endif %}
-                                    class="h-5 w-5 rounded border-slate-300 text-primary focus:ring-primary transition-colors">
-                                <label class="text-sm font-semibold text-slate-700 select-none" for="{{ field.id_for_label }}">
+                <div class="p-4 space-y-4">
+                    {% for field in form %}
+                        <div class="py-2 space-y-1.5">
+                            {% if field.field.widget.input_type == 'checkbox' %}
+                                <div class="flex items-center gap-3 py-1">
+                                    <input type="checkbox" name="{{ field.name }}" id="{{ field.id_for_label }}" {% if field.value %}checked{% endif %}
+                                        class="h-5 w-5 rounded border-slate-300 text-primary focus:ring-primary transition-colors">
+                                    <label class="text-sm font-semibold text-slate-700 select-none" for="{{ field.id_for_label }}">
+                                        {{ field.label }}
+                                    </label>
+                                </div>
+                            {% elif field.field.choices %}
+                                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block" for="{{ field.id_for_label }}">
                                     {{ field.label }}
                                 </label>
-                            </div>
-                        {% elif field.field.choices %}
-                            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block" for="{{ field.id_for_label }}">
-                                {{ field.label }}
-                            </label>
-                            <select name="{{ field.name }}" id="{{ field.id_for_label }}" {% if field.field.required %}required{% endif %}
-                                class="w-full rounded-xl border-slate-200 text-sm focus:border-primary focus:ring-primary transition-shadow">
-                                {% for choice in field.field.choices %}
-                                    <option value="{{ choice.0 }}" {% if field.value|stringformat:'s' == choice.0|stringformat:'s' %}selected{% endif %}>{{ choice.1 }}</option>
-                                {% endfor %}
-                            </select>
-                        {% else %}
-                            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block" for="{{ field.id_for_label }}">
-                                {{ field.label }}
-                            </label>
-                            {% if field.name == 'notes' %}
-                                <textarea name="{{ field.name }}" id="{{ field.id_for_label }}" rows="4"
-                                    class="w-full rounded-xl border-slate-200 text-sm focus:border-primary focus:ring-primary transition-shadow">{{ field.value|default:'' }}</textarea>
+                                <select name="{{ field.name }}" id="{{ field.id_for_label }}" {% if field.field.required %}required{% endif %}
+                                    class="w-full rounded-xl border-slate-300 bg-white text-sm shadow-sm focus:border-primary focus:ring-primary transition-shadow">
+                                    {% for choice in field.field.choices %}
+                                        <option value="{{ choice.0 }}" {% if field.value|stringformat:'s' == choice.0|stringformat:'s' %}selected{% endif %}>{{ choice.1 }}</option>
+                                    {% endfor %}
+                                </select>
                             {% else %}
-                                <input type="{{ field.field.widget.input_type|default:'text' }}" 
-                                       name="{{ field.name }}" 
-                                       id="{{ field.id_for_label }}" 
-                                       value="{{ field.value|default:'' }}"
-                                       {% if field.field.required %}required{% endif %}
-                                       class="w-full rounded-xl border-slate-200 text-sm focus:border-primary focus:ring-primary transition-shadow">
+                                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block" for="{{ field.id_for_label }}">
+                                    {{ field.label }}
+                                </label>
+                                {% if field.name == 'notes' %}
+                                    <textarea name="{{ field.name }}" id="{{ field.id_for_label }}" rows="4"
+                                        class="w-full rounded-xl border-slate-300 bg-white text-sm shadow-sm focus:border-primary focus:ring-primary transition-shadow">{{ field.value|default:'' }}</textarea>
+                                {% else %}
+                                    <input type="{{ field.field.widget.input_type|default:'text' }}" 
+                                           name="{{ field.name }}" 
+                                           id="{{ field.id_for_label }}" 
+                                           value="{{ field.value|default:'' }}"
+                                           {% if field.field.required %}required{% endif %}
+                                           class="w-full {% if field.field.widget.input_type != 'file' %}rounded-xl {% endif %}border-slate-300 bg-white text-sm shadow-sm focus:border-primary focus:ring-primary transition-shadow">
+                                {% endif %}
                             {% endif %}
-                        {% endif %}
-                        
-                        {% if field.help_text %}
-                            <p class="text-xs text-slate-400 italic">{{ field.help_text }}</p>
-                        {% endif %}
-                        
-                        {% if field.errors %}
-                            <div class="text-red-500 text-xs font-semibold mt-1">
-                                {{ field.errors }}
-                            </div>
-                        {% endif %}
-                    </div>
-                {% endfor %}
+                            
+                            {% if field.help_text %}
+                                <p class="text-xs text-slate-400 italic">{{ field.help_text }}</p>
+                            {% endif %}
+                            
+                            {% if field.errors %}
+                                <div class="text-red-500 text-xs font-semibold mt-1">
+                                    {{ field.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
 
-                <div class="flex flex-col sm:flex-row gap-3 pt-4">
-                    <button type="submit" class="inline-flex items-center justify-center flex-1 px-6 py-3 bg-primary hover:bg-primary-dark text-white font-bold rounded-xl transition-colors shadow-sm">
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <button type="submit" class="inline-flex items-center justify-center flex-1 px-10 py-4 bg-primary hover:bg-primary-dark text-white font-bold rounded-xl transition-colors shadow-sm whitespace-nowrap">
                         Save Meal
                     </button>
                     {% if meal %}
-                        <a href="{% url 'meal-detail' meal.id %}" class="inline-flex items-center justify-center flex-1 px-6 py-3 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 font-bold rounded-xl transition-colors order-first sm:order-none">
+                        <a href="{% url 'meal-detail' meal.id %}" class="inline-flex items-center justify-center flex-1 px-10 py-4 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 font-bold rounded-xl transition-colors order-first sm:order-none">
                             Cancel
                         </a>
                     {% else %}
-                        <a href="{% url 'meal-list' %}" class="inline-flex items-center justify-center flex-1 px-6 py-3 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 font-bold rounded-xl transition-colors order-first sm:order-none">
+                        <a href="{% url 'meal-list' %}" class="inline-flex items-center justify-center flex-1 px-10 py-4 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 font-bold rounded-xl transition-colors order-first sm:order-none">
                             Cancel
                         </a>
                     {% endif %}
