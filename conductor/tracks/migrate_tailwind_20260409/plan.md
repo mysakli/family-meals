@@ -30,13 +30,13 @@
     - [x] Update `django-filter` form styling to Tailwind
 - [x] Task: Conductor - User Manual Verification 'Meal List View Migration' (Protocol in workflow.md) 9341f0d
 
-## Phase 4: Detail, Forms & Cleanup
+## Phase 4: Detail, Forms & Cleanup [checkpoint: 90f1d7a]
 
-- [~] Task: Migrate Meal Detail View
-    - [ ] Update detail layout and badges to Tailwind
-- [ ] Task: Migrate Meal Forms (Create/Update)
-    - [ ] Apply Tailwind styling to form inputs and buttons
-- [ ] Task: Final CSS Cleanup
-    - [ ] Remove `meals.css` and Bootstrap links
-    - [ ] Verify all Quality Gates (coverage, mobile, accessibility)
-- [ ] Task: Conductor - User Manual Verification 'Detail, Forms & Cleanup' (Protocol in workflow.md)
+- [x] Task: Migrate Meal Detail View f67c0fa
+    - [x] Update detail layout and badges to Tailwind
+- [x] Task: Migrate Meal Forms (Create/Update) e40981f
+    - [x] Apply Tailwind styling to form inputs and buttons
+- [x] Task: Final CSS Cleanup be77999
+    - [x] Remove `meals.css` and Bootstrap links
+    - [x] Verify all Quality Gates (coverage, mobile, accessibility)
+- [x] Task: Conductor - User Manual Verification 'Detail, Forms & Cleanup' (Protocol in workflow.md) 90f1d7a
