@@ -1,5 +1,6 @@
 import tempfile
 import shutil
+import re
 from io import BytesIO
 from PIL import Image
 from django.test import TestCase, Client, override_settings
@@ -120,6 +121,25 @@ class ViewTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.meal.refresh_from_db()
         self.assertEqual(self.meal.name, "Updated Salad")
+
+    def test_meal_create_accepts_prefilled_datetime_value(self):
+        response = self.client.get(reverse('meal-create'))
+        self.assertEqual(response.status_code, 200)
+
+        match = re.search(r'name="date_created"[^>]*value="([^"]+)"', response.content.decode())
+        self.assertIsNotNone(match)
+
+        response = self.client.post(reverse('meal-create'), {
+            'name': 'Prefilled Date Meal',
+            'meal_type': self.meal_type.pk,
+            'date_created': match.group(1),
+        })
+
+        if response.status_code != 302:
+            print(response.context['form'].errors)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(Meal.objects.filter(name='Prefilled Date Meal').exists())
 
     def test_meal_delete_view(self):
         response = self.client.post(reverse('meal-delete', kwargs={'pk': self.meal.pk}))

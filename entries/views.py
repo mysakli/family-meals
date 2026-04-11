@@ -8,6 +8,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
+from .forms import MealForm
 from .models import Meal, MealType
 # Redundant - image processing now handled in model's save() method
 # from django.core.files.base import ContentFile
@@ -59,12 +60,12 @@ class MealDetailView(DetailView):
 
 class MealCreateView(CreateView):
     model = Meal
-    fields = '__all__'
+    form_class = MealForm
     success_url = reverse_lazy('meal-list')
 
 class MealUpdateView(UpdateView):
     model = Meal
-    fields = '__all__'
+    form_class = MealForm
     
     def get_success_url(self):
         meal = self.get_object()
