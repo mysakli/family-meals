@@ -36,8 +36,9 @@ class FrontendTests(TestCase):
         """Verify that the meal list uses Tailwind card styling."""
         response = self.client.get(reverse('meal-list'))
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'grid-cols-2')
+        self.assertContains(response, 'md:grid-cols-4')
         self.assertContains(response, 'rounded-xl')
-        self.assertContains(response, 'shadow-sm')
 
     def test_meal_list_has_touch_friendly_links(self):
         """Verify that edit and delete links have classes that can be styled for touch targets."""

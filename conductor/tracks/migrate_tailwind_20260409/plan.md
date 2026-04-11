@@ -19,20 +19,20 @@
     - [x] Apply Tailwind layout utilities to `base.html` content block
 - [x] Task: Conductor - User Manual Verification 'Base Template Migration' (Protocol in workflow.md) 5a7c7a1
 
-## Phase 3: Meal List View Migration
+## Phase 3: Meal List View Migration [checkpoint: 9341f0d]
 
-- [~] Task: Write Tests for Meal List UI
-    - [ ] Verify presence of key UI elements after migration
-- [ ] Task: Migrate Meal Card Component
-    - [ ] Replace Bootstrap card classes with Tailwind
-    - [ ] Ensure 200x200 square image display is maintained
-- [ ] Task: Migrate Filter Toolbar
-    - [ ] Update `django-filter` form styling to Tailwind
-- [ ] Task: Conductor - User Manual Verification 'Meal List View Migration' (Protocol in workflow.md)
+- [x] Task: Write Tests for Meal List UI 2078830
+    - [x] Verify presence of key UI elements after migration
+- [x] Task: Migrate Meal Card Component a179fe7
+    - [x] Replace Bootstrap card classes with Tailwind
+    - [x] Ensure 200x200 square image display is maintained
+- [x] Task: Migrate Filter Toolbar 2050018
+    - [x] Update `django-filter` form styling to Tailwind
+- [x] Task: Conductor - User Manual Verification 'Meal List View Migration' (Protocol in workflow.md) 9341f0d
 
 ## Phase 4: Detail, Forms & Cleanup
 
-- [ ] Task: Migrate Meal Detail View
+- [~] Task: Migrate Meal Detail View
     - [ ] Update detail layout and badges to Tailwind
 - [ ] Task: Migrate Meal Forms (Create/Update)
     - [ ] Apply Tailwind styling to form inputs and buttons
