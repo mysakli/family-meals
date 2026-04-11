@@ -47,26 +47,27 @@ class FrontendTests(TestCase):
         self.assertContains(response, 'text-primary')
         self.assertContains(response, 'text-red-600')
 
-    def test_meal_form_uses_bootstrap_classes(self):
-        """Verify that the meal form uses Bootstrap 5 form-control classes."""
+    def test_meal_form_uses_tailwind_classes(self):
+        """Verify that the meal form uses Tailwind styling."""
         response = self.client.get(reverse('meal-create'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'class="form-control')
-        self.assertContains(response, 'class="form-select" id="id_meal_type"')
-        self.assertContains(response, 'class="btn btn-primary')
-        self.assertContains(response, 'class="btn btn-secondary')
+        self.assertContains(response, 'rounded-xl')
+        self.assertContains(response, 'bg-primary')
+        self.assertContains(response, 'text-slate-600')
 
     def test_meal_form_checkboxes_use_tailwind_sizing_classes(self):
         """Verify that checkbox inputs override the global input height with Tailwind classes."""
         response = self.client.get(reverse('meal-create'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'class="h-4 w-4 min-h-0 rounded border-slate-200"')
+        self.assertContains(response, 'class="h-5 w-5 rounded border-slate-300')
 
     def test_meal_form_renders_meal_type_as_select(self):
         """Verify that the meal_type field renders as a select instead of a text input."""
         response = self.client.get(reverse('meal-create'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, '<select name="meal_type" class="form-select" id="id_meal_type" required>')
+        self.assertContains(response, 'name="meal_type"')
+        self.assertContains(response, 'id="id_meal_type"')
+        self.assertContains(response, 'rounded-xl')
         self.assertContains(response, f'<option value="{self.meal_type.pk}">{self.meal_type.name}</option>', html=True)
 
     def test_base_layout_has_tailwind_css(self):
