@@ -1,62 +1,85 @@
 {% extends "entries/base.html" %}
 {% block content %}
 
-<div class="toolbar shadow-sm border rounded p-3 mb-4 bg-white">
-    <form method="GET" class="filter-form">
-        <div class="row g-3 align-items-end">
+<div class="bg-white rounded-xl shadow-sm border border-slate-100 p-4 mb-6">
+    <form method="GET" class="space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 items-end">
             {% for field in filter.form %}
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="filter-field">
-                        {{ field.label_tag }}
-                        {{ field }}
+                <div class="flex flex-col gap-1.5">
+                    <label for="{{ field.id_for_label }}" class="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                        {{ field.label }}
+                    </label>
+                    <div class="relative">
+                        {% if field.field.widget.input_type == 'text' %}
+                            <input type="text" name="{{ field.name }}" id="{{ field.id_for_label }}" value="{{ field.value|default:'' }}" 
+                                class="w-full rounded-lg border-slate-200 text-sm focus:border-primary focus:ring-primary">
+                        {% else %}
+                            <select name="{{ field.name }}" id="{{ field.id_for_label }}" 
+                                class="w-full rounded-lg border-slate-200 text-sm focus:border-primary focus:ring-primary">
+                                {% for choice in field.field.choices %}
+                                    <option value="{{ choice.0 }}" {% if field.value == choice.0|stringformat:"s" %}selected{% endif %}>{{ choice.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}
-            <div class="col-12 col-md-auto ms-auto">
-                <div class="d-grid gap-2 d-md-flex">
-                    <button type="submit" class="btn btn-primary">Filter</button>
-                    <a href="{% url 'meal-create' %}" class="btn btn-success">+ Add New Meal</a>
-                </div>
+            <div class="flex flex-col sm:flex-row gap-2 lg:col-span-1 ms-auto w-full lg:w-auto">
+                <button type="submit" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-bold rounded-lg text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors">
+                    Filter
+                </button>
+                <a href="{% url 'meal-create' %}" class="inline-flex items-center justify-center px-4 py-2 border border-primary text-sm font-bold rounded-lg text-primary bg-white hover:bg-primary-light/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors">
+                    + Add New
+                </a>
             </div>
         </div>
     </form>
 </div>
 
-<div class="meals-container row g-3 g-md-4">
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
 {% for meal in meals %}
-    <div class="col-6 col-sm-4">
-        <div class="card h-100 shadow-sm border-0">
-            <div class='img-container'>
-                <img class="card-img-top" src='{{meal.get_photo_url.url }}' alt='{{ meal.name }}'>
+    <div class="flex flex-col">
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden flex flex-col h-full border border-slate-100 transition-shadow hover:shadow-md">
+            <div class="aspect-square overflow-hidden bg-slate-100">
+                <img class="w-full h-full object-cover" src="{{ meal.get_photo_url.url }}" alt="{{ meal.name }}">
             </div>
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title fw-bold">
+            <div class="p-3 md:p-4 flex flex-col flex-grow">
+                <h3 class="text-sm md:text-base font-bold text-slate-900 mb-1 line-clamp-2">
                     {{ meal.name }}
-                </h5>
-                <p class="card-text text-muted small flex-grow-1">
+                </h3>
+                <p class="text-xs md:text-sm text-slate-500 line-clamp-3 flex-grow mb-3">
                     {{ meal.notes|truncatewords:20 }}
                 </p>
                 
-                <div class="mb-3">
+                <div class="mt-auto">
                     {% if meal.recipe %}
-                        <a href='{{meal.recipe}}' class='btn btn-outline-primary w-100' target='_blank'>View Recipe →</a>
+                        <a href="{{ meal.recipe }}" class="inline-flex items-center justify-center w-full px-3 py-2 text-xs md:text-sm font-semibold text-primary-dark bg-primary-light/10 hover:bg-primary-light/20 rounded-lg transition-colors" target="_blank">
+                            View Recipe
+                            <svg class="ml-1.5 h-3 w-3 md:h-4 md:w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                            </svg>
+                        </a>
                     {% else %}
-                        <button class='btn btn-secondary w-100' disabled>No Recipe</button>
+                        <button class="inline-flex items-center justify-center w-full px-3 py-2 text-xs md:text-sm font-semibold text-slate-400 bg-slate-100 rounded-lg cursor-not-allowed" disabled>
+                            No Recipe
+                        </button>
                     {% endif %}
                 </div>
             </div>
             
-            <div class="card-footer bg-transparent border-top-0 pb-3">
-                <div class="d-flex justify-content-between align-items-center">
-                    <a href="{% url 'meal-update' meal.id %}" class="card-link text-primary fw-semibold">Edit</a>
-                    <a href="{% url 'meal-delete' meal.id %}" class="card-link text-danger fw-semibold">Delete</a>
+            <div class="px-3 py-3 md:px-4 md:py-4 bg-slate-50/50 border-t border-slate-100">
+                <div class="flex justify-between items-center">
+                    <a href="{% url 'meal-update' meal.id %}" class="text-xs md:text-sm font-bold text-primary hover:text-primary-dark transition-colors">Edit</a>
+                    <a href="{% url 'meal-delete' meal.id %}" class="text-xs md:text-sm font-bold text-red-600 hover:text-red-700 transition-colors">Delete</a>
                 </div>
             </div>
         </div>
     </div>
 {% empty %}
-    <div class="col-12">
-        <div class="alert alert-info">No meals found. Try adjusting your filters or add a new meal!</div>
+    <div class="col-span-full">
+        <div class="p-4 rounded-xl bg-blue-50 text-blue-700 text-sm md:text-base border border-blue-100">
+            No meals found. Try adjusting your filters or add a new meal!
+        </div>
     </div>
 {% endfor %}
 </div>

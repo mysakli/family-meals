@@ -1,15 +1,30 @@
 {% extends "entries/base.html" %}
 
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        <p>
-            Are you sure you want to delete
-            <em>"{{ meal.name }}"</em>?
-        </p>
-        <input type="submit" value="Confirm">
-    </form>
-    <a href="{% url 'meal-detail' meal.id %}">
-        <button>Cancel</button>
-    </a>
+<div class="flex justify-center">
+    <div class="w-full max-w-lg">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-8 text-center">
+            <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-6">
+                <svg class="h-8 w-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                </svg>
+            </div>
+            
+            <h2 class="text-2xl font-bold text-slate-900 mb-2">Delete Meal?</h2>
+            <p class="text-slate-500 mb-8">
+                Are you sure you want to delete <span class="font-bold text-slate-700">"{{ meal.name }}"</span>? This action cannot be undone.
+            </p>
+
+            <form method="post" class="flex flex-col sm:flex-row gap-3">
+                {% csrf_token %}
+                <button type="submit" class="inline-flex items-center justify-center flex-1 px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl transition-colors shadow-sm">
+                    Yes, Delete
+                </button>
+                <a href="{% url 'meal-detail' meal.id %}" class="inline-flex items-center justify-center flex-1 px-6 py-3 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 font-bold rounded-xl transition-colors order-first sm:order-none">
+                    Cancel
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock content %}

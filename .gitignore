@@ -41,6 +41,12 @@ venv_meals/
 *.psql
 *.pgsql
 
+# Node modules
+node_modules/
+
+# Conductor
+conductor/
+
 # OS specific
 .DS_Store
 .DS_Store?
@@ -51,3 +57,6 @@ ehthumbs.db
 Thumbs.dbstaticfiles/
 
 entries/Notes
+
+.gemini/
+gha-creds-*.json

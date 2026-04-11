@@ -1,0 +1,31 @@
+{
+  "name": "meals",
+  "version": "1.0.0",
+  "description": "A simple Django app to manage family meals.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tailwindcss -i ./entries/static/css/tailwind_input.css -o ./entries/static/css/tailwind.css",
+    "watch": "tailwindcss -i ./entries/static/css/tailwind_input.css -o ./entries/static/css/tailwind.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mysakli/family-meals.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/mysakli/family-meals/issues"
+  },
+  "homepage": "https://github.com/mysakli/family-meals#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.27",
+    "postcss": "^8.5.9",
+    "tailwindcss": "^3.4.19"
+  },
+  "dependencies": {
+    "@tailwindcss/forms": "^0.5.11"
+  }
+}
