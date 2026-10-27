@@ -4,29 +4,21 @@ A simple Django app to manage family meals.
 
 ## Quick start (development)
 
-1. Create and activate a virtual environment (if you don't already have the project's venv):
+Use **Python 3.12** locally (see `.python-version`). That matches the Docker image used for Hetzner. Django 5.1 supports 3.10–3.13; avoid 3.14 for now.
+
+1. Create and activate a virtual environment:
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
+python3.12 -m venv venv_meals
+source venv_meals/bin/activate
 ```
 
-(If you've already created `venv_meals`, activate it instead:)
-
-```bash
-source /home/michaela/Dokumenty/Coding/meals/venv_meals/bin/activate
-```
+(With pyenv: `pyenv install 3.12` if needed, then the same `venv` commands.)
 
 2. Install dependencies
 
 ```bash
 pip install -r requirements.txt
-```
-
-To capture exact pinned versions from the project's existing virtualenv run:
-
-```bash
-/home/michaela/Dokumenty/Coding/meals/venv_meals/bin/python -m pip freeze > requirements.txt
 ```
 
 3. Environment variables
@@ -85,6 +77,7 @@ python manage.py runserver
 
 ## Notes
 
+- Runtime: Python **3.12** (Dockerfile + `.python-version`). Production deploy: see `deploy/README.md` (Hetzner + Tailscale).
 - `settings.py` shows the project was generated with Django 5.1; adjust `requirements.txt` if you need a different Django version.
 - The project uses PostgreSQL in `settings.py`. If you want to use the included sqlite DB for quick testing, edit `FamilyMeals/settings.py` or set the DB env vars accordingly.
 

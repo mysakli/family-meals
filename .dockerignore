@@ -1,0 +1,17 @@
+.git
+.github
+venv_meals
+venv
+node_modules
+media
+uploads
+staticfiles
+*.sqlite3
+.env
+.gemini
+conductor
+pics
+**/__pycache__
+*.pyc
+.DS_Store
+#script#
